@@ -23,6 +23,7 @@ setup(
 
 	packages=[
 		'mcv_api',
+		'mcv_api.masks',
 		'mcv_api.filters',
 		'mcv_api.blobs.specialized',
 		'mcv_api.blobs.specialized.flies',
