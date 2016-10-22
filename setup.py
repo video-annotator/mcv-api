@@ -10,7 +10,7 @@ __email__       = "ricardojvr@gmail.com"
 __status__      = "Development"
 
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
 
@@ -21,12 +21,5 @@ setup(
 	author_email		='ricardojvr@gmail.com',
 	license 			='MIT',
 
-	packages=[
-		'mcv_api',
-		'mcv_api.masks',
-		'mcv_api.filters',
-		'mcv_api.blobs.specialized',
-		'mcv_api.blobs.specialized.flies',
-		'mcv_api.blobs.specialized.mice',
-		],
+	packages=find_packages(),
 )
