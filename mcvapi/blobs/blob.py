@@ -7,9 +7,8 @@ class Blob(object):
         self._centroid  = None
         self._bounding  = None
         self._area      = None
-                
 
-    def draw(self, frame): cv2.polylines(frame, np.array( [self._contour] ), True, (255,255,0), 2)
+    def draw(self, frame, color=(255,255,0)): cv2.polylines(frame, np.array( [self._contour] ), True, color, 2)
 
     def distance_to(self, blob):
         p0 = self._centroid
@@ -29,3 +28,6 @@ class Blob(object):
         denom = math.sqrt( (dx1*dx1 + dy1*dy1) * (dx2*dx2 + dy2*dy2) + 1e-10 )
         ang = nom / denom
         return math.degrees( math.acos(ang) )
+
+    @property
+    def centroid(self): return self._centroid

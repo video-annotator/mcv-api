@@ -31,20 +31,27 @@ class OrderByPosition(MCVBase):
             self._orderblobs_last_blobs = blobs
             return blobs
 
-        blobs = blobs + [ None for i in range(len(self._orderblobs_last_blobs)-len(blobs)) ]
+        blobs = blobs + [None for i in range(len(self._orderblobs_last_blobs)-len(blobs))]
 
         #################### SELECT BLOBS BY POSITION ########################
         #### Blobs are identified by their distance to the previous position
         
         classifications = []
         for comb in combinations( blobs, self._orderblobs_last_blobs ):
-            classification = sum([b1.distance_to(b2) for b1,b2 in comb if (b1!=None and b2!=None)])
+            distances = []
+            for b1,b2 in comb:
+                if (b1!=None and b2!=None):
+                    dist = b1.distance_to(b2)
+                    distances.append(dist)
+
+            classification = sum(distances)
             classifications.append([classification, [b1 for b1,b2 in comb]])
 
         if len(classifications)==0: 
             return [ None for i in range(len(self._orderblobs_last_blobs)) ]
         
         classifications = sorted(classifications, key=lambda x: x[0], reverse=False)
+        
         r = classifications[0]
 
         for i in range(len(r[1])):
