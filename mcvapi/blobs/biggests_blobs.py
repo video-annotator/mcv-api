@@ -5,7 +5,7 @@ class BiggestsBlobs(MCVBase):
 	
 	def __init__(self, **kwargs):
 		super(BiggestsBlobs, self).__init__(**kwargs)
-		self._param_biggests_blobs_n = 1
+		self._param_biggests_blobs_n = kwargs.get('biggests_blobs_n', 1)
 
 	def process(self, blobs):
 		blobs = sorted(blobs,key=lambda a:a._area,reverse=True)

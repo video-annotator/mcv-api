@@ -16,4 +16,7 @@ class PolygonsMask(MCVBase):
 
 	def processflow(self, frame):
 		frame = super(PolygonsMask, self).processflow(frame)
-		return PolygonsMask.process(self, frame)	
+		return PolygonsMask.process(self, frame)
+
+	def clear(self): 
+		self._param_polygons_mask = None

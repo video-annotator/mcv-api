@@ -23,6 +23,7 @@ class OrderByPosition(MCVBase):
         super(OrderByPosition, self).__init__(**kwargs)
         self._orderblobs_last_blobs = []
     
+    def clear(self): self._orderblobs_last_blobs = []
 
     def process(self, blobs):
 

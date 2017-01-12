@@ -9,6 +9,8 @@ class Path(object):
 		self._path = []
 		if blob: self._path.append(blob._centroid)
 		
+	def __len__(self): return len(self._data)
+	def __getitem__(self, index): return self._data[index] if len(self._data)>index else None
 
 	def clear(self): 
 		self._data 		= []

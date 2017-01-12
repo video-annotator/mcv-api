@@ -10,3 +10,10 @@ class MCVBase(object):
 	def processflow(self, frame):
 		#execute the current the parent filters
 		return frame
+
+	def clear(self): pass
+
+	@property
+	def frame_index(self): return self._frame_index
+	@frame_index.setter
+	def frame_index(self, value): self._frame_index = value

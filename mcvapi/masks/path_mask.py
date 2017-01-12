@@ -5,8 +5,8 @@ import numpy as np, cv2
 class PathMask(MCVBase):
 	
 	def __init__(self, **kwargs):
-		self._param_path_mask_paths  = kwargs.get('mask_paths', [])
-		self._param_path_mask_radius = kwargs.get('mask_radius', 30)
+		self._param_pathmask_paths  = kwargs.get('mask_paths', [])
+		self._param_pathmask_radius = kwargs.get('mask_radius', 30)
 		
 	def process(self, frame):
 		paths = self.mask_paths
@@ -21,10 +21,10 @@ class PathMask(MCVBase):
 		return PathMask.process(self, frame)
 
 	@property
-	def mask_radius(self): return self._param_path_mask_radius
+	def mask_radius(self): return self._param_pathmask_radius
 
 	@property
-	def mask_paths(self):  return self._param_path_mask_paths
+	def mask_paths(self):  return self._param_pathmask_paths
 	@mask_paths.setter
-	def mask_paths(self, value):  self._param_path_mask_paths = value
+	def mask_paths(self, value):  self._param_pathmask_paths = value
 	
