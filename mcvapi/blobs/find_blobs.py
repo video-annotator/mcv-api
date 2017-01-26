@@ -16,7 +16,7 @@ class FindBlobs(MCVBase):
 		for cnt in contours:
 			m = cv2.moments(cnt); m00 = m['m00']
 			
-			if m00 > self.findblobs_min_area and m00 < self.findblobs_max_area:
+			if self.findblobs_min_area <= m00 <= self.findblobs_max_area:
 				if m00!=0: centroid = ( int(round(m['m10']/m00) ), int(round(m['m01']/m00)) )
 				else: centroid = (0,0)
 
