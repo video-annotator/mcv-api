@@ -8,7 +8,7 @@ class PolygonsMask(MCVBase):
 		self._param_polygons_mask  = None
 		self._param_polygons_polys = None
 
-	def process(self, frame):
+	def process(self, frame):		
 		if self._param_polygons_mask is None:
 			self._param_polygons_mask = np.zeros_like(frame)
 			cv2.drawContours(self._param_polygons_mask, self._param_polygons_polys, -1, (255,255,255), -1)		
@@ -20,3 +20,4 @@ class PolygonsMask(MCVBase):
 
 	def clear(self): 
 		self._param_polygons_mask = None
+		pass
