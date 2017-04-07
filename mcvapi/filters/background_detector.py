@@ -30,7 +30,7 @@ class BackgroundDetector(MCVBase):
 		if "gaussian_blur_sigma_x" in kwargs.keys(): 		gaussian_blur_sigma_x = kwargs['gaussian_blur_sigma_x']
 		if "update_function" in kwargs.keys(): 				update_function = kwargs['update_function']
 		if "capture" not in kwargs.keys(): 
-			print "The variable capture was not set in the object constructer";
+			print( "The variable capture was not set in the object constructer")
 			exit()
 		else: 
 			capture = kwargs['capture']
