@@ -35,8 +35,8 @@ class BackgroundDetector(MCVBase):
 		else: 
 			capture = kwargs['capture']
 		
-		self._width 					= capture.get( cv2.CAP_PROP_FRAME_WIDTH )
-		self._height 					= capture.get( cv2.CAP_PROP_FRAME_HEIGHT )
+		self._width 					= int(round(capture.get( cv2.CAP_PROP_FRAME_WIDTH )))
+		self._height 					= int(round(capture.get( cv2.CAP_PROP_FRAME_HEIGHT)))
 		self._capture 					= capture
 		self._gaussian_blur_matrix_size = gaussian_blur_matrix_size
 		self._gaussian_blur_sigma_x		= gaussian_blur_sigma_x
@@ -44,7 +44,7 @@ class BackgroundDetector(MCVBase):
 		self.__initialize__()
 
 	def __initialize__(self):
-		cp = np.zeros( (self._height, self._width), np.float32 )
+		cp = np.zeros( ( self._height, self._width ), np.float32 )
 		self._background_sum 	 = [cp.copy(),cp.copy(),cp.copy()]
 		self._background_counter = [cp.copy(),cp.copy(),cp.copy()]
 
@@ -94,24 +94,31 @@ class BackgroundDetector(MCVBase):
 		#point the video capture to the next frame to test
 		self._capture.set( cv2.CAP_PROP_POS_FRAMES, current_frame_index + jump_2_frame )
 		
-		if self._update_function!=None: 
-			tmp	= cv2.merge( (cv2.convertScaleAbs(self._background_average[0]), cv2.convertScaleAbs(self._background_average[1]), cv2.convertScaleAbs(self._background_average[2])))
-			self._update_function( tmp, int(self._capture.get(cv2.CAP_PROP_POS_FRAMES)) )
+		if self._update_function!=None and \
+			self._background_average[0] is not None and \
+			self._background_average[1] is not None and \
+			self._background_average[2] is not None:
 			
+			a = cv2.convertScaleAbs(self._background_average[0])
+			b = cv2.convertScaleAbs(self._background_average[1])
+			c = cv2.convertScaleAbs(self._background_average[2])
+			tmp	= cv2.merge( (a, b, c) )
+			self._update_function( tmp, int(self._capture.get(cv2.CAP_PROP_POS_FRAMES)) )
+		
 		if res==False: return None
 		Y_next, Cr_next, Cb_next = self.__clean_noise(next_frame)
-
 		Y_diff, Cr_diff, Cb_diff = cv2.absdiff( Y, Y_next ), cv2.absdiff( Cr, Cr_next ), cv2.absdiff( Cb, Cb_next )
 		
 		ret , Y_gray  = cv2.threshold(Y_diff,  threshold , 255, cv2.THRESH_BINARY )
 		ret , Cr_gray = cv2.threshold(Cr_diff, threshold , 255, cv2.THRESH_BINARY )
 		ret , Cb_gray = cv2.threshold(Cb_diff, threshold , 255, cv2.THRESH_BINARY )
-
+		
 		_, contours, hierarchy = cv2.findContours(Y_gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
 
 		hulls = []
 		for contour in contours: hulls.append( cv2.convexHull( contour ) )
-
+		
 		Y_background_area  = np.ones( (self._height, self._width), np.float32 )
 		Cr_background_area = Y_background_area.copy()
 		Cb_background_area = Y_background_area.copy()
@@ -148,7 +155,7 @@ class BackgroundDetector(MCVBase):
 			res, current_frame = self._capture.read()
 			if not res: break
 			self.__process(current_frame, jump_2_frame, compare_with_jump_frame, threshold)
-
+			
 		self._background 		= cv2.convertScaleAbs(self._background_average[0])
 		self._background_color 	= cv2.merge( (cv2.convertScaleAbs(self._background_average[0]), cv2.convertScaleAbs(self._background_average[1]), cv2.convertScaleAbs(self._background_average[2])))
 
