@@ -13,6 +13,7 @@ class TrackPath(MCVBase):
 
 	def process(self, blobs):
 
+
 		# First time
 		if len(self._trackpath_paths)==0 or len(self._trackpath_paths)!=len(blobs): 
 			self._trackpath_paths = [Path(b) for b in blobs]			

@@ -10,7 +10,8 @@ class PathMask(MCVBase):
 		
 	def process(self, frame):
 		paths = self.mask_paths
-		mask  = np.zeros_like(frame)			
+		mask  = np.zeros_like(frame)
+
 		for path in paths:
 			position = path[self.frame_index] if isinstance(path, list) else path.get_position(self.frame_index) 
 			if position is not None: cv2.circle(mask, position, self.mask_radius, (255,255,255), -1)			
