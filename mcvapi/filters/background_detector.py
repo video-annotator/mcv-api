@@ -91,8 +91,12 @@ class BackgroundDetector(MCVBase):
 		self._capture.set( cv2.CAP_PROP_POS_FRAMES, current_frame_index + compare_with_jump_frame )
 		res, next_frame = self._capture.read()
 
+		if not res: return False
+
 		#point the video capture to the next frame to test
 		self._capture.set( cv2.CAP_PROP_POS_FRAMES, current_frame_index + jump_2_frame )
+
+
 		
 		if self._update_function!=None and \
 			self._background_average[0] is not None and \
@@ -143,7 +147,7 @@ class BackgroundDetector(MCVBase):
 		self._background_average[1] = np.divide(self._background_sum[1] , self._background_counter[1] )
 		self._background_average[2] = np.divide(self._background_sum[2] , self._background_counter[2] )
 	
-
+		return True
 
 
 	def detect(self, jump_2_frame=0, compare_with_jump_frame = 1000, threshold = 5 ):
@@ -154,8 +158,8 @@ class BackgroundDetector(MCVBase):
 		while res:
 			res, current_frame = self._capture.read()
 			if not res: break
-			self.__process(current_frame, jump_2_frame, compare_with_jump_frame, threshold)
-			
+			if not self.__process(current_frame, jump_2_frame, compare_with_jump_frame, threshold): break
+
 		self._background 		= cv2.convertScaleAbs(self._background_average[0])
 		self._background_color 	= cv2.merge( (cv2.convertScaleAbs(self._background_average[0]), cv2.convertScaleAbs(self._background_average[1]), cv2.convertScaleAbs(self._background_average[2])))
 
