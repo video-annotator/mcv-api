@@ -18,15 +18,15 @@ class OrderByPosition(MCVBase):
     Return: Ordered blobs
     """
 
-
+    IMPORT = "from mcvapi.blobs.order_by_position import OrderByPosition"
+    
     def __init__(self, **kwargs):
         super(OrderByPosition, self).__init__(**kwargs)
         self._orderblobs_last_blobs = []
     
     def clear(self): self._orderblobs_last_blobs = []
 
-    def process(self, blobs):
-
+    def process(self, blobs, **kwargs):
         # First time
         if len(self._orderblobs_last_blobs)==0 or len(self._orderblobs_last_blobs)<len(blobs): 
             self._orderblobs_last_blobs = blobs
@@ -61,6 +61,6 @@ class OrderByPosition(MCVBase):
 
         return r[1]
 
-    def processflow(self, blobs):
-        blobs = super(OrderByPosition, self).processflow(blobs)
-        return self.process(blobs)
+    def processflow(self, blobs, **kwargs):
+        blobs = super(OrderByPosition, self).processflow(blobs, **kwargs)
+        return OrderByPosition.process(self, blobs, **kwargs)

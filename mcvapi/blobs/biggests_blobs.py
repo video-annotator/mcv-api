@@ -2,24 +2,25 @@ from mcvapi.mcvbase import MCVBase
 
 class BiggestsBlobs(MCVBase):
 
-	
-	def __init__(self, **kwargs):
-		super(BiggestsBlobs, self).__init__(**kwargs)
-		self._param_biggests_blobs_n = kwargs.get('biggests_blobs_n', 1)
+    IMPORT = "from mcvapi.blobs.biggests_blobs import BiggestsBlobs"
+    
+    def __init__(self, **kwargs):
+        super(BiggestsBlobs, self).__init__(**kwargs)
+        self.load(kwargs)
 
-	def process(self, blobs):
-		blobs = sorted(blobs,key=lambda a:a._area,reverse=True)
-		if len(blobs)>self.biggests_blobs_n: return blobs[:self.biggests_blobs_n]
-		else: return blobs
+    def load(self, data, **kwargs):
+        super(BiggestsBlobs, self).load(data, **kwargs)
+        self._param_biggestsblobs_n = data.get('biggestsblobs_n', 1)
 
-	def processflow(self, blobs):
-		blobs = super(BiggestsBlobs, self).processflow(blobs)
-		return self.process(blobs)
+    def save(self, data, **kwargs):
+        super(BiggestsBlobs, self).save(data, **kwargs)
+        data['biggestsblobs_n'] = self._param_biggestsblobs_n
 
-	#####################################################################
-	### PROPERTIES ######################################################
-	#####################################################################
+    def process(self, blobs, **kwargs):
+        blobs = sorted(blobs,key=lambda a:a._area,reverse=True)
+        if len(blobs)>self._param_biggestsblobs_n: return blobs[:self._param_biggestsblobs_n]
+        else: return blobs
 
-	@property
-	def biggests_blobs_n(self): return self._param_biggests_blobs_n
-	
+    def processflow(self, blobs, **kwargs):
+        blobs = super(BiggestsBlobs, self).processflow(blobs, **kwargs)
+        return BiggestsBlobs.process(self, blobs, **kwargs)

@@ -3,21 +3,33 @@ import numpy as np, cv2
 
 
 class PolygonsMask(MCVBase):
-	
-	def __init__(self, **kwargs):
-		self._param_polygons_mask  = None
-		self._param_polygons_polys = None
+    
+    IMPORT = "from mcvapi.masks.polygons_mask import PolygonsMask"
+    
+    def __init__(self, **kwargs):
+        super(PolygonsMask, self).__init__(**kwargs)
+        self.load(kwargs)
 
-	def process(self, frame):		
-		if self._param_polygons_mask is None:
-			self._param_polygons_mask = np.zeros_like(frame)
-			cv2.drawContours(self._param_polygons_mask, self._param_polygons_polys, -1, (255,255,255), -1)		
-		return cv2.bitwise_and(frame, self._param_polygons_mask)
+    def load(self, data, **kwargs):
+        super(PolygonsMask, self).load(data, **kwargs)
+        self._param_polygonsmask_mask  = data.get('polygonsmask_mask')
+        self._param_polygonsmask_polys = data.get('polygonsmask_polys')
 
-	def processflow(self, frame):
-		frame = super(PolygonsMask, self).processflow(frame)
-		return PolygonsMask.process(self, frame)
+    def save(self, data, **kwargs):
+        super(PolygonsMask, self).save(data, **kwargs)
+        data['polygonsmask_mask']  = self._param_polygonsmask_mask
+        data['polygonsmask_polys'] = self._param_polygonsmask_polys
 
-	def clear(self): 
-		self._param_polygons_mask = None
-		pass
+    def process(self, frame, **kwargs):       
+        if self._param_polygonsmask_mask is None:
+            self._param_polygonsmask_mask = np.zeros_like(frame)
+            cv2.drawContours(self._param_polygonsmask_mask, self._param_polygonsmask_polys, -1, (255,255,255), -1)      
+        return cv2.bitwise_and(frame, self._param_polygonsmask_mask)
+
+    def processflow(self, frame, **kwargs):
+        frame = super(PolygonsMask, self).processflow(frame, **kwargs)
+        return PolygonsMask.process(self, frame, **kwargs)
+
+    def clear(self): 
+        self._param_polygonsmask_mask = None
+        pass

@@ -3,31 +3,40 @@ import numpy as np
 from mcvapi.mcvbase import MCVBase
 
 class MorphologyExClose(MCVBase):
-	
-	def __init__(self, **kwargs):
-		super(MorphologyExClose, self).__init__(**kwargs)
-		self._param_morphologyexclose_kernel_size = 3
+    
+    IMPORT = "from mcvapi.filters.morphologyex_close import MorphologyExClose"
+    
+    def __init__(self, **kwargs):
+        super(MorphologyExClose, self).__init__(**kwargs)
+        self.load(kwargs)
 
-		self._param_morphologyexclose_kernel = np.ones(
-			(self._param_morphologyexclose_kernel_size,self._param_morphologyexclose_kernel_size)
-		,np.uint8)
+        
 
-	#####################################################################
-	### PROPERTIES ######################################################
-	#####################################################################
+    def load(self, data, **kwargs):
+        super(MorphologyExClose, self).load(data, **kwargs)
+        self._param_morphologyexclose_kernel_size = data.get('morphologyexopen_kernel_size', 3)
+        self._param_morphologyexclose_kernel = np.ones(
+            (self._param_morphologyexclose_kernel_size,self._param_morphologyexclose_kernel_size)
+            ,np.uint8
+        )
+        self._param_morphologyexclose_usefilter = data.get('morphologyexclose_usefilter', False)
 
-	@property
-	def morphologyexclose_kernel_size(self):  return self._param_morphologyexclose_kernel_size
+    def save(self, data, **kwargs):
+        super(MorphologyExClose, self).save(data, **kwargs)
+        data['morphologyexopen_kernel_size'] = self._param_morphologyexclose_kernel_size
+        data['morphologyexclose_usefilter'] = self._param_morphologyexclose_usefilter
+
+    #####################################################################
+    ### FUNCTIONS #######################################################
+    #####################################################################
 
 
-	#####################################################################
-	### FUNCTIONS #######################################################
-	#####################################################################
-
-
-	def process(self, frame):
-		return cv2.morphologyEx(frame, cv2.MORPH_CLOSE, self._param_morphologyexclose_kernel)
-
-	def processflow(self, image):
-		res = super(MorphologyExClose, self).processflow(image)
-		return self.process(res)
+    def process(self, frame, **kwargs):
+        if self._param_morphologyexclose_usefilter:
+            return cv2.morphologyEx(frame, cv2.MORPH_CLOSE, self._param_morphologyexclose_kernel)
+        else:
+            return frame
+        
+    def processflow(self, image, **kwargs):
+        res = super(MorphologyExClose, self).processflow(image, **kwargs)
+        return MorphologyExClose.process(self, res, **kwargs)

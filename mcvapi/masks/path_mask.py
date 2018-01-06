@@ -3,29 +3,34 @@ import numpy as np, cv2
 
 
 class PathMask(MCVBase):
-	
-	def __init__(self, **kwargs):
-		self._param_pathmask_paths  = kwargs.get('mask_paths', [])
-		self._param_pathmask_radius = kwargs.get('mask_radius', 30)
-		
-	def process(self, frame):
-		paths = self.mask_paths
-		mask  = np.zeros_like(frame)
+    
+    IMPORT = "from mcvapi.masks.path_mask import PathMask"
+    
+    def __init__(self, **kwargs):
+        super(PathMask, self).__init__(**kwargs)
+        self.load(kwargs)
 
-		for path in paths:
-			position = path[self.frame_index] if isinstance(path, list) else path.get_position(self.frame_index) 
-			if position is not None: cv2.circle(mask, position, self.mask_radius, (255,255,255), -1)			
-		return cv2.bitwise_and(frame, mask)
+    def load(self, data, **kwargs):
+        super(PathMask, self).load(data, **kwargs)
+        self._param_pathmask_paths  = data.get('pathmask_paths', [])
+        self._param_pathmask_radius = data.get('pathmask_radius', 30)
+       
+    def save(self, data, **kwargs):
+        super(PathMask, self).save(data, **kwargs)
+        data['pathmask_paths']  = self._param_pathmask_paths
+        data['pathmask_radius'] = self._param_pathmask_radius
+        
+    def process(self, frame, **kwargs):
+        paths = self._param_pathmask_paths
+        mask  = np.zeros_like(frame)
 
-	def processflow(self, frame):
-		frame = super(PathMask, self).processflow(frame)
-		return PathMask.process(self, frame)
+        frame_index = kwargs.get('frame_index')
 
-	@property
-	def mask_radius(self): return self._param_pathmask_radius
+        for path in paths:
+            position = path[frame_index] if isinstance(path, list) else path.get_position(frame_index) 
+            if position is not None: cv2.circle(mask, position, self._param_pathmask_radius, (255,255,255), -1)         
+        return cv2.bitwise_and(frame, mask)
 
-	@property
-	def mask_paths(self):  return self._param_pathmask_paths
-	@mask_paths.setter
-	def mask_paths(self, value):  self._param_pathmask_paths = value
-	
+    def processflow(self, frame, **kwargs):
+        frame = super(PathMask, self).processflow(frame, **kwargs)
+        return PathMask.process(self, frame, **kwargs)

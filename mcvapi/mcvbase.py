@@ -11,15 +11,24 @@ class MCVBase(object):
 
 	def __init__(self, **kwargs): 
 		super(MCVBase, self).__init__()
+		#self.load(kwargs)
 
-	def process(self, input_data):
+	def load(self, data, **kwargs):
+		pass
+
+	def save(self, data, **kwargs):
+		pass
+
+	def process(self, input_data, **kwargs):
 		"""Filter implmentation."""
 		return input_data
 
-	def processflow(self, input_data):
+	def processflow(self, input_data, **kwargs):
 		"""Process all the filters from the hierarchy."""
-		result = super(MCVBase).processflow(input_data)
-		return result
+		return input_data
+
+	def end(self, input_data, **kwargs):
+		return input_data
 
 	def clear(self): 
 		"""
@@ -27,13 +36,3 @@ class MCVBase(object):
 		Used to re-start an analysis from scratch.
 		"""
 		pass
-
-	@property
-	def frame_index(self): 
-		"""
-		Some filters require to know which frame it being analysed.
-		This property allows you to get and set the index of the video current frame.
-		"""
-		return self._frame_index
-	@frame_index.setter
-	def frame_index(self, value): self._frame_index = value
