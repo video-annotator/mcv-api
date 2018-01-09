@@ -8,7 +8,7 @@ class Mask(MCVBase):
     
     def __init__(self, **kwargs):
         super(Mask, self).__init__(**kwargs)
-        self.load(kwargs)
+
 
     def load(self, data, **kwargs):
         super(Mask, self).load(data, **kwargs)

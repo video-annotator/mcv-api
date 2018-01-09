@@ -8,7 +8,7 @@ class MorphologyExOpen(MCVBase):
     
     def __init__(self, **kwargs):
         super(MorphologyExOpen, self).__init__(**kwargs)
-        self.load(kwargs)
+
 
     def load(self, data, **kwargs):
         super(MorphologyExOpen, self).load(data, **kwargs)

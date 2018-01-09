@@ -6,14 +6,12 @@ class FindBlobs(MCVBase):
    
     IMPORT = "from mcvapi.blobs.find_blobs import FindBlobs"
     
-    def __init__(self, **kwargs):
-        super(FindBlobs, self).__init__(**kwargs)
-        self.load(kwargs)
 
     def load(self, data, **kwargs):
         super(FindBlobs, self).load(data, **kwargs)
-        self._param_findblobs_min_area = data.get('_param_findblobs_min_area', 0)
-        self._param_findblobs_max_area = data.get('_param_findblobs_max_area', 100000000)
+        self._param_findblobs_min_area = data.get('findblobs_min_area', 0)
+        self._param_findblobs_max_area = data.get('findblobs_max_area', 100000000)
+        
 
     def save(self, data, **kwargs):
         super(FindBlobs, self).save(data, **kwargs)

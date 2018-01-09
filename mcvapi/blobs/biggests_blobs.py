@@ -4,9 +4,7 @@ class BiggestsBlobs(MCVBase):
 
     IMPORT = "from mcvapi.blobs.biggests_blobs import BiggestsBlobs"
     
-    def __init__(self, **kwargs):
-        super(BiggestsBlobs, self).__init__(**kwargs)
-        self.load(kwargs)
+
 
     def load(self, data, **kwargs):
         super(BiggestsBlobs, self).load(data, **kwargs)

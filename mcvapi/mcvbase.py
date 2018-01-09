@@ -9,9 +9,8 @@ class MCVBase(object):
 	"""
 
 
-	def __init__(self, **kwargs): 
-		super(MCVBase, self).__init__()
-		#self.load(kwargs)
+	def __init__(self, **kwargs):
+		self.load(kwargs)
 
 	def load(self, data, **kwargs):
 		pass

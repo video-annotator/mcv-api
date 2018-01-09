@@ -18,7 +18,7 @@ class AdaptativeThreshold(MCVBase):
     
     def __init__(self, **kwargs):
         super(AdaptativeThreshold, self).__init__(**kwargs)
-        self.load(kwargs)
+
 
 
     def load(self, data, **kwargs):
@@ -51,6 +51,7 @@ class AdaptativeThreshold(MCVBase):
 
     def process(self, frame, **kwargs):
         thresh = cv2.cvtColor(frame , cv2.COLOR_BGR2GRAY) if len(frame.shape)>2 else frame
+        
         return cv2.adaptiveThreshold(
             thresh, 255,
             self._param_adaptivethreshold_method,

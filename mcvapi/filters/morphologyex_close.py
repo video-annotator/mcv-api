@@ -8,7 +8,7 @@ class MorphologyExClose(MCVBase):
     
     def __init__(self, **kwargs):
         super(MorphologyExClose, self).__init__(**kwargs)
-        self.load(kwargs)
+
 
         
 

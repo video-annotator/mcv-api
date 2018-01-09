@@ -8,7 +8,7 @@ class BackgroundSubtract(MCVBase):
     
     def __init__(self, **kwargs):
         super(BackgroundSubtract, self).__init__(**kwargs)
-        self.load(kwargs)
+
         
 
     def load(self, data, **kwargs):

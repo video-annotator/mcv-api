@@ -8,7 +8,7 @@ class PathMask(MCVBase):
     
     def __init__(self, **kwargs):
         super(PathMask, self).__init__(**kwargs)
-        self.load(kwargs)
+
 
     def load(self, data, **kwargs):
         super(PathMask, self).load(data, **kwargs)
