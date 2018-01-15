@@ -8,7 +8,12 @@ class Blob(object):
         self._bounding  = None
         self._area      = None
 
-    def draw(self, frame, color=(255,255,0)): cv2.polylines(frame, np.array( [self._contour] ), True, color, 2)
+    def draw(self, frame, color=(255,255,0)):
+        cv2.polylines(frame, np.array( [self._contour] ), True, color, 2)
+
+        if hasattr(self, '_head') and hasattr(self, '_tail'):
+            cv2.circle(frame, self._head, 3, (0,0,255), -1)
+            cv2.circle(frame, self._tail, 3, (255,0,0), -1)
 
     def distance_to(self, blob):
         p0 = self._centroid
