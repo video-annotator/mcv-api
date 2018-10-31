@@ -202,11 +202,11 @@ class BackgroundDetector(MCVBase):
         data['_height']                     = self._height
 
     def load( self, data ):
-        self._background                = data['_background']
-        self._background_sum            = data['_background_sum']
-        self._background_average        = data['_background_sum'] 
-        self._background_counter        = data['_background_counter'] 
-        self._gaussian_blur_matrix_size = data['_gaussian_blur_matrix_size']
-        self._gaussian_blur_sigma_x     = data['_gaussian_blur_sigma_x']
-        self._width                     = data['_width'] 
-        self._height                    = data['_height']
+        self._background                = data.get('_background', self._background)
+        self._background_sum            = data.get('_background_sum', self._background_sum)
+        self._background_average        = data.get('_background_average', self._background_average)
+        self._background_counter        = data.get('_background_counter', self._background_counter)
+        self._gaussian_blur_matrix_size = data.get('_gaussian_blur_matrix_size', self._gaussian_blur_matrix_size)
+        self._gaussian_blur_sigma_x     = data.get('_gaussian_blur_sigma_x', self._gaussian_blur_sigma_x)
+        self._width                     = data.get('_width', self._width)
+        self._height                    = data.get('_height', self._height)
