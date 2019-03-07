@@ -15,9 +15,9 @@ class Mask(MCVBase):
         self._param_mask_img  = data.get('mask_img', None)
 
     def save(self, data, **kwargs):
-        super(Mask, self).save(data, **kwargs)
+        data = super(Mask, self).save(data, **kwargs)
         data['mask_img']  = self._param_mask_img
-
+        return data
 
 
     def process(self, frame, **kwargs):

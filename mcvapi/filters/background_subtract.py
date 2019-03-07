@@ -17,10 +17,10 @@ class BackgroundSubtract(MCVBase):
         self._param_backgroundsubtract_threshold = data.get('backgroundsubtract_threshold', 0)
 
     def save(self, data, **kwargs):
-        super(BackgroundSubtract, self).save(data, **kwargs)
+        data = super(BackgroundSubtract, self).save(data, **kwargs)
         data['backgroundsubtract_image']     = self._param_backgroundsubtract_image
         data['backgroundsubtract_threshold'] = self._param_backgroundsubtract_threshold
-
+        return data
 
     #####################################################################
     ### FUNCTIONS #######################################################

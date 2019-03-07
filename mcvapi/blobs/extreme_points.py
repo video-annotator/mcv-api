@@ -13,7 +13,7 @@ class BlobExtremePoints(MCVBase):
 
 
     def save(self, data, **kwargs):
-        super(BlobExtremePoints, self).save(data, **kwargs)
+        return super(BlobExtremePoints, self).save(data, **kwargs)
 
 
     def process(self, blobs, **kwargs):        

@@ -22,9 +22,10 @@ class MorphologyExClose(MCVBase):
         self._param_morphologyexclose_usefilter = data.get('morphologyexclose_usefilter', False)
 
     def save(self, data, **kwargs):
-        super(MorphologyExClose, self).save(data, **kwargs)
+        data = super(MorphologyExClose, self).save(data, **kwargs)
         data['morphologyexopen_kernel_size'] = self._param_morphologyexclose_kernel_size
         data['morphologyexclose_usefilter'] = self._param_morphologyexclose_usefilter
+        return data
 
     #####################################################################
     ### FUNCTIONS #######################################################

@@ -29,12 +29,12 @@ class AdaptativeThreshold(MCVBase):
         self._param_adaptivethreshold_c             = data.get('adaptivethreshold_c', 255)
 
     def save(self, data, **kwargs):
-        super(AdaptativeThreshold, self).save(data, **kwargs)
+        data = super(AdaptativeThreshold, self).save(data, **kwargs)
         data['adaptivethreshold_method']        = self._param_adaptivethreshold_method
         data['adaptivethreshold_type']          = self._param_adaptivethreshold_type
         data['adaptivethreshold_block_size']    = self._param_adaptivethreshold_block_size
         data['adaptivethreshold_c']             = self._param_adaptivethreshold_c
-
+        return data
     #####################################################################
     ### PROPERTIES ######################################################
     #####################################################################

@@ -16,10 +16,11 @@ class PathMask(MCVBase):
         self._param_pathmask_radius = data.get('pathmask_radius', 30)
        
     def save(self, data, **kwargs):
-        super(PathMask, self).save(data, **kwargs)
+        data = super(PathMask, self).save(data, **kwargs)
         data['pathmask_paths']  = self._param_pathmask_paths
         data['pathmask_radius'] = self._param_pathmask_radius
-        
+        return data
+
     def process(self, frame, **kwargs):
         paths = self._param_pathmask_paths
         mask  = np.zeros_like(frame)

@@ -16,9 +16,10 @@ class PolygonsMask(MCVBase):
         self._param_polygonsmask_polys = data.get('polygonsmask_polys')
 
     def save(self, data, **kwargs):
-        super(PolygonsMask, self).save(data, **kwargs)
+        data = super(PolygonsMask, self).save(data, **kwargs)
         data['polygonsmask_mask']  = self._param_polygonsmask_mask
         data['polygonsmask_polys'] = self._param_polygonsmask_polys
+        return data
 
     def process(self, frame, **kwargs): 
         if self._param_polygonsmask_mask is None:

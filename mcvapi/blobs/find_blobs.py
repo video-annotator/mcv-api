@@ -14,9 +14,10 @@ class FindBlobs(MCVBase):
         
 
     def save(self, data, **kwargs):
-        super(FindBlobs, self).save(data, **kwargs)
+        data = super(FindBlobs, self).save(data, **kwargs)
         data['findblobs_min_area'] = self._param_findblobs_min_area
         data['findblobs_max_area'] = self._param_findblobs_max_area
+        return data
 
     def process(self, frame, **kwargs):
         _, contours, _ = cv2.findContours(frame.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)

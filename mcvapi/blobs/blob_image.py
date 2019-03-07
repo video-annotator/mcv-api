@@ -13,9 +13,10 @@ class BlobImage(MCVBase):
         
 
     def save(self, data, **kwargs):
-        super(FindBlobs, self).save(data, **kwargs)
+        data = super().save(data, **kwargs)
         data['blobimage_margin'] = self._param_blobimage_margin
-    
+        return data
+
     def process(self, blobs, **kwargs):
         _in_original_image = kwargs['oimage']
         for blob in blobs:

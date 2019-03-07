@@ -11,8 +11,9 @@ class BiggestsBlobs(MCVBase):
         self._param_biggestsblobs_n = data.get('biggestsblobs_n', 1)
 
     def save(self, data, **kwargs):
-        super(BiggestsBlobs, self).save(data, **kwargs)
+        data = super(BiggestsBlobs, self).save(data, **kwargs)
         data['biggestsblobs_n'] = self._param_biggestsblobs_n
+        return data
 
     def process(self, blobs, **kwargs):
         blobs = sorted(blobs,key=lambda a:a._area,reverse=True)
