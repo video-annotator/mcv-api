@@ -16,7 +16,7 @@ class MCVBase(object):
 		pass
 
 	def save(self, data, **kwargs):
-		pass
+		return data
 
 	def process(self, input_data, **kwargs):
 		"""Filter implmentation."""
